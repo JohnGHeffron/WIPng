@@ -1,0 +1,11 @@
+.light-modal {
+  background-color: var(--prime-light);
+  color: var(--prime-dark);
+}
+.modal-header button {
+  color: var(--prime-dark);
+}
+.modal-footer button {
+  background-color: var(--prime-dark);
+  color: white;
+}

@@ -1,0 +1,5 @@
+app-command {
+  display: flex;
+  flex-direction: column;
+}
+

@@ -1,0 +1,27 @@
+  /* job list */
+  .info-button {
+    border: 1px solid var(--prime);
+    margin: .25rem;
+    padding: .5rem;
+    border-radius: .75rem; 
+    color: var(--prime-dark);
+    background-color: whitesmoke;
+  } 
+  .info-button.selected {
+    border: 3px solid var(--prime);
+  }
+  .info-button--text {
+    float: left;
+  }
+  .info-button--caption {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .info-button--detail {
+    font-size: 1em;
+    overflow: auto;
+  }
+  .info-button--image {
+    float: right;
+  }
+  

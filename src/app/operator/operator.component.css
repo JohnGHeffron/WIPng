@@ -1,0 +1,4 @@
+#operatorLabel:hover {
+  cursor: pointer; 
+  background-color: var(--prime-light);
+}
