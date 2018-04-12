@@ -6,8 +6,8 @@ import { WipCommand } from '../wip-command';
   selector: 'app-command',
   template: `<input type="button" [disabled]="!command.enabled" 
                                   value="{{command.caption}}"
-                                  routerLink="{{command.route}}">`,
-                                  // (click)="invokeCommand()" >`,
+                                  (click)="invokeCommand()" >`,
+                                  //routerLink="{{command.route}}">`,
   styleUrls: ['./command.component.css']
 })
 export class CommandComponent implements OnInit {
@@ -16,9 +16,10 @@ export class CommandComponent implements OnInit {
 
   @Input() command: WipCommand;
 
-  // invokeCommand() {
-  //   this.router.navigate([this.command.route]);
-  // }
+  invokeCommand() {
+//    this.router.navigate([this.command.route]);
+    console.log(this.command.route, " clicked.");
+  }
 
   ngOnInit() {
   }
