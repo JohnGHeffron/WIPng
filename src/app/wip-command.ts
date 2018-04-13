@@ -1,11 +1,5 @@
 export class WipCommand {
   caption: string;
-  // get caption(): string {
-  //   return this._caption;
-  // }
-  // set caption(value: string) {
-  //   this._caption = value;
-  // }
   enabled: boolean;
   expires: boolean;
   url: string;

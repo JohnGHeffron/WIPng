@@ -1,4 +1,4 @@
-app-command {
+app-command-modal {
   display: flex;
   flex-direction: column;
 }
