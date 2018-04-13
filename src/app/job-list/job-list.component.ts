@@ -56,7 +56,9 @@ export class JobListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadJobList(this.appState.workcenter.id);
+    if (this.appState.workcenter) {
+      this.loadJobList(this.appState.workcenter.id);
+    }
   }
 
   ngOnDestroy() {

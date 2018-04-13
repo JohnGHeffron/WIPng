@@ -1,0 +1,31 @@
+.menu-button {
+  color: white; /*var(--prime-light);*/
+  background-color: var(--prime);
+  font-size: 1.5em;
+  padding: 0.25em 0.25em;
+  border: none;
+  border-radius: 0.25em;
+  margin: 2px 0 0 4px;
+}
+
+.menu-button:disabled {
+  color: darkgray; /*var(--prime); */
+  background-color: gray; /*var(--prime-light);*/
+  border: 1px solid var(--prime);
+}
+
+.menu-button:last-of-type {
+  margin-bottom: 2px;
+}
+
+.light-modal {
+  background-color: var(--prime-light);
+  color: var(--prime-dark);
+}
+.modal-header button {
+  color: var(--prime-dark);
+}
+.modal-footer button {
+  background-color: var(--prime-dark);
+  color: white;
+}

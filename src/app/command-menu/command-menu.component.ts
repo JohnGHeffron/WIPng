@@ -9,7 +9,11 @@ import { WipCommand } from '../wip-command';
 
 @Component({
   selector: 'app-command-menu',
-  template: '<div><app-command *ngFor="let cmd of commands" [command]="cmd"></app-command></div>',
+  template: `<div>
+      <app-generic-command 
+        *ngFor="let cmd of commands" [caption]="cmd.caption" [commandName]="cmd.route" [disabled]="!cmd.enabled">
+      </app-generic-command></div>`,
+  //'<div><app-command *ngFor="let cmd of commands" [command]="cmd"></app-command></div>',
   styleUrls: ['./command-menu.component.css']
 })
 export class CommandMenuComponent implements OnInit, OnDestroy {
