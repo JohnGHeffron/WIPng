@@ -19,6 +19,10 @@ import { Modal2Component } from './modal2/modal2.component';
 import { NotImplementedComponent } from './commands/notimplemented.component';
 import { CommandModalComponent } from './commands/command-modal/command-modal.component';
 import { StopLaborCommandComponent } from './commands/stoplabor-command/stoplabor-command.component';
+import { RecordQuantityComponent } from './commands/record-quantity/record-quantity.component';
+import { ChangeStatusComponent } from './commands/change-status/change-status.component';
+import { ProductionReceiptComponent } from './commands/production-receipt/production-receipt.component';
+import { ShopPacketComponent } from './commands/shop-packet/shop-packet.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { StopLaborCommandComponent } from './commands/stoplabor-command/stoplabo
     Modal2Component,
     NotImplementedComponent,
     CommandModalComponent,
-    StopLaborCommandComponent
+    StopLaborCommandComponent,
+    RecordQuantityComponent,
+    ChangeStatusComponent,
+    ProductionReceiptComponent,
+    ShopPacketComponent
   ],
   entryComponents: [],
   imports: [

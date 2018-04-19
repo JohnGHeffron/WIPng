@@ -12,6 +12,9 @@ export class CommandModalComponent implements OnInit {
 
   @Input() command: WipCommand;
 
+  title: string;
+  sequence: number = 0;
+
   constructor(private modalService: NgbModal, private router: Router) { }
 
   open(content) {
@@ -19,7 +22,18 @@ export class CommandModalComponent implements OnInit {
     this.router.navigate([this.command.route]);
   }
 
+  next() {
+    this.sequence++;
+    console.log(`Next clicked ${this.sequence} times.`);
+  }
+
+  onTitleChanged(title:string) {
+    console.log("in parent component (modal)");
+    this.title = title;
+  }
+
   ngOnInit() {
+    this.title = this.command.caption;
   }
 
 }

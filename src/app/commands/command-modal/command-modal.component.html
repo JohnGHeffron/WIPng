@@ -1,16 +1,19 @@
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="light-modal">
     <div class="modal-header">
-      <h4 class="modal-title">{{command.caption}}</h4>
+      <h4 class="modal-title">{{title}}</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body">
+    <!-- <div class="modal-body" (titleChanged)="onTitleChanged(title)"> -->
       <router-outlet></router-outlet>
-    </div>
+    <!-- </div> -->
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      <!-- <a routerLink='record-pieces' class="btn btn-outline-dark" >Record Pieces</a>   -->
+      <!-- <a routerLink='prod-receipt' class="btn btn-outline-dark" >Prod Receipt</a>   -->
+      <button type="button" class="btn btn-outline-dark" (click)="next()">Next</button>
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Submit</button>
     </div>
   </div>
 </ng-template>

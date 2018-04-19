@@ -1,4 +1,4 @@
-.menu-button {
+.menu-button, a {
   color: white; /*var(--prime-light);*/
   background-color: var(--prime);
   font-size: 1.5em;
@@ -25,7 +25,7 @@
 .modal-header button {
   color: var(--prime-dark);
 }
-.modal-footer button {
+.modal-footer button, .modal-footer a {
   background-color: var(--prime-dark);
   color: white;
 }

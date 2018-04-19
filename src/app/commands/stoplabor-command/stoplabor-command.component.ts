@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stoplabor-command',
-  template: 'This is the stop labor command component.'
+  templateUrl: './stoplabor-command.component.html'
 })
 
-export class StopLaborCommandComponent {
+export class StopLaborCommandComponent implements OnInit, OnChanges {
+
+  @Input() sequence: number;
+  components: any[] = ['record-pieces', 'change-status', 'prod-receipt'];
+
+  constructor(private router: Router) {}
+
+  ngOnChanges() {
+    console.log(`received new sequence number ${this.sequence}`);
+  }
+
+  ngOnInit() {
+    this.router.navigate([this.components[0]]);
+  }
 
 }
