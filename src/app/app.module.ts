@@ -23,6 +23,7 @@ import { RecordQuantityComponent } from './commands/record-quantity/record-quant
 import { ChangeStatusComponent } from './commands/change-status/change-status.component';
 import { ProductionReceiptComponent } from './commands/production-receipt/production-receipt.component';
 import { ShopPacketComponent } from './commands/shop-packet/shop-packet.component';
+import { StartLaborComponent } from './commands/start-labor/start-labor.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ShopPacketComponent } from './commands/shop-packet/shop-packet.componen
     RecordQuantityComponent,
     ChangeStatusComponent,
     ProductionReceiptComponent,
-    ShopPacketComponent
+    ShopPacketComponent,
+    StartLaborComponent
   ],
   entryComponents: [],
   imports: [

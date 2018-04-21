@@ -1,14 +1,18 @@
+import { CommandName } from './command-name.enum';
+
 export class WipCommand {
   caption: string;
   enabled: boolean;
   expires: boolean;
-  url: string;
+  name: CommandName;
+  hasUI: boolean;
+  subcommands: CommandName[];
   
-  constructor(caption: string, enabled: boolean, expires: boolean, url: string){
+  constructor(caption: string, enabled: boolean, expires: boolean){
     this.caption = caption;
     this.enabled = enabled;
     this.expires = expires;
-    this.url = url;
+    this.name = CommandName[this.caption.replace(" ", "")];
   }
 
   get route(): string {

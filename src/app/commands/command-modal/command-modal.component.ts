@@ -18,13 +18,20 @@ export class CommandModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private router: Router) { }
 
   open(content) {
+    if (this.command.hasUI) {
+    }
     this.modalService.open(content);
-    this.router.navigate([this.command.route]);
+    if (this.command.subcommands.length > 0){
+      this.router.navigate([this.command.subcommands[0]]);
+    } else {
+      this.router.navigate([this.command.name]);
+    }
   }
 
   next() {
-    this.sequence++;
-    console.log(`Next clicked ${this.sequence} times.`);
+    this.sequence = ++this.sequence % this.command.subcommands.length;
+    console.log("sequence: ", this.sequence);
+    this.router.navigate([this.command.subcommands[this.sequence]]);
   }
 
   onTitleChanged(title:string) {
@@ -34,6 +41,7 @@ export class CommandModalComponent implements OnInit {
 
   ngOnInit() {
     this.title = this.command.caption;
+    this.sequence = 0;
   }
 
 }

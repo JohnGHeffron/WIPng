@@ -6,6 +6,7 @@ import { AppStateService } from '../app-state.service';
 import { Workcenter } from '../workcenter';
 import { Operator } from '../operator';
 import { WipCommand } from '../wip-command';
+import { WipCommandFactory } from '../wip-command-factory';
 
 @Component({
   selector: 'app-command-menu',
@@ -53,7 +54,10 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
             this.appState.job, this.appState.operator.id)
       .then( (response) => {return response.json(); })
       .then( (data) => {
-        this.commands = data.map(d => new WipCommand(d.caption, d.enabled, d.expires, d.url));
+        //this.commands = data.map(d => new WipCommand(d.caption, d.enabled, d.expires));
+        let factory: WipCommandFactory = new WipCommandFactory();
+        this.commands = data.map(d => factory.makeWipCommand(d.caption, d.enabled, d.expires));
+        this.commands.forEach( cmd => console.log(cmd));
         // console.log(this.commands[0]);
         // console.log(this.commands[0].route);
       })
