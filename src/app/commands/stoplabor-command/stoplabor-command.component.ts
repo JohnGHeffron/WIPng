@@ -18,7 +18,7 @@ export class StopLaborCommandComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.router.navigate([this.components[0]]);
+    this.router.navigate([{outlets: {workflow: this.components[0]}}]);
   }
 
 }
