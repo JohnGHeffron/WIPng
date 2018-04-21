@@ -8,6 +8,8 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
 export class ChangeStatusComponent implements OnInit {
 
   @Input() sequence;
+  jobstatuses: string [] = ['held', 'started', 'active', 'completed'];
+  selected: string = 'started';
 
   constructor() { }
 
