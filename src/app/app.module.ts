@@ -18,7 +18,6 @@ import { CommandMenuComponent } from './command-menu/command-menu.component';
 import { Modal2Component } from './modal2/modal2.component';
 import { NotImplementedComponent } from './commands/notimplemented.component';
 import { CommandModalComponent } from './commands/command-modal/command-modal.component';
-import { StopLaborCommandComponent } from './commands/stoplabor-command/stoplabor-command.component';
 import { RecordQuantityComponent } from './commands/record-quantity/record-quantity.component';
 import { ChangeStatusComponent } from './commands/change-status/change-status.component';
 import { ProductionReceiptComponent } from './commands/production-receipt/production-receipt.component';
@@ -38,7 +37,6 @@ import { StartLaborComponent } from './commands/start-labor/start-labor.componen
     Modal2Component,
     NotImplementedComponent,
     CommandModalComponent,
-    StopLaborCommandComponent,
     RecordQuantityComponent,
     ChangeStatusComponent,
     ProductionReceiptComponent,
