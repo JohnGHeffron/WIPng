@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 
 import { ApiService } from '../api.service';
@@ -23,7 +24,8 @@ import { Operator } from '../operator';
 export class OperatorComponent implements OnInit {
 
   private operators: Operator[];
-  private currentOperator;
+  @Input() currentOperator: Operator;
+  private subscription: Subscription;
   badgeValue: string = null;
 
   userInput: FormControl = new FormControl('');
@@ -32,7 +34,13 @@ export class OperatorComponent implements OnInit {
     this.userInput.valueChanges
       .debounceTime(1000)
       .subscribe( badge => this.findOperator(badge));
-  }
+    this.subscription = this.appState.operatorChanged.subscribe(
+      operator => {
+        console.log('changing to operator:', operator);
+        this.currentOperator = operator;
+      });
+    appState.operator = null;
+    }
 
   // get currentOperator() { return this._currentOperator; }
   // set currentOperator(value: Operator) {
@@ -42,8 +50,8 @@ export class OperatorComponent implements OnInit {
 
   findOperator(badge: string): void {
     let operator = this.operators.find( op => { return op.username === badge } );
-    this.currentOperator = operator ? operator : null;
-    this.appState.operator = this.currentOperator;
+    //this.currentOperator = operator ? operator : null;
+    this.appState.operator = operator; //this.currentOperator;
   }
 
   nameClicked() {
