@@ -12,7 +12,7 @@
     <div class="modal-footer">
       <!-- <a routerLink='record-pieces' class="btn btn-outline-dark" >Record Pieces</a>   -->
       <!-- <a routerLink='prod-receipt' class="btn btn-outline-dark" >Prod Receipt</a>   -->
-      <span [hidden]="command.routes.length==0">
+      <span [hidden]="command.routes.length <= 1">
         <button type="button" class="btn btn-outline-dark" (click)="next()">Next</button>
       </span>
       <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Submit</button>
