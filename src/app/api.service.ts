@@ -1,22 +1,31 @@
 import { Injectable } from '@angular/core';
+import { AppStateService } from './app-state.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class ApiService {
 
-  sites: any[] = [
-    { "id": 1, "name": "s000", "description": "Main Production Site"},
-    { "id": 2, "name": "sHOR", "description": "Horicon Warehouse"},
-    { "id": 3, "name": "sMILW", "description": "Milwaukee Plant"}
-  ]
+  SETUP = 'setup';
+  RUN = 'run';
+  INDIRECT = 'IndirectProductionOrderLabor';
+  START_LABOR = 'StartLabor';
+  STOP_LABOR = 'StopLabor';
 
-  constructor() { }
+  uuidv1;
+
+  constructor(private appState: AppStateService) { //private uuidv1: () => string, private moment: Moment, 
+    // fallback for flaky uuid CDN wzrd.in/standalone/uuid%2Fv1@latest
+    if (typeof this.uuidv1 === "undefined") {
+      this.uuidv1 = function () {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          let r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+          return v.toString(16);
+        });
+      }
+    }  
+  }
 
   getSites = () => { return fetch("http://localhost/mes/api/sites"); }
-    //"http://localhost/mes/api/values"
-    //"http://localhost:53416/api/values/1"
-    //"http://localhost/mv2mobileapp/api/workcenters"
-    //"http://localhost/mes/api/sites" 
-    //{ return this.sites; }
 
   getWorkcenters = (siteId) => { return fetch(`http://localhost/mes/api/Workcenters?siteId=${siteId}`) };
   
@@ -40,6 +49,20 @@ export class ApiService {
   getCommands = (workCenterId, orderId, employeeId) => {
     return fetch(`http://localhost/mes/api/Workcenters/GetMenu?workcenterId=${workCenterId}&orderId=${orderId}&employeeId=${employeeId}`);
   }
+
+  testMoment = () => { console.log( moment().format()); }
+
+  sendStartTransaction = (startType: string, expires: boolean) => {
+    this.sendTransaction({
+      'uuid': this.uuidv1(),
+      'type': this.START_LABOR,
+      'subType': startType,
+      'workcenterid': this.appState.workcenter.id,
+      'employeeId': this.appState.operator.id,
+      'jobId': this.appState.job,
+      'time': moment().format()
+    });
+    }
 
   sendTransaction = function (transaction) {
     return this.sendTransactionNoSync(transaction);
@@ -76,7 +99,7 @@ export class ApiService {
   // };
 
   sendTransactionNoSync = function (trans) {
-      var ok;
+      let ok;
       return fetch('http://localhost/mes/api/labortransaction', {
         method: 'POST',
         headers: {
