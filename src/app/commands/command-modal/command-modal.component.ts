@@ -18,20 +18,17 @@ export class CommandModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private router: Router) { }
 
   open(content) {
-    if (this.command.hasUI) {
-    }
-    this.modalService.open(content);
-    if (this.command.subcommands.length > 0){
-      this.router.navigate([this.command.subcommands[0]]);
+    if (this.command.routes.length > 0){
+      this.modalService.open(content);
+      this.router.navigate([this.command.routes[0]]);
     } else {
-      this.router.navigate([this.command.name]);
+      this.command.run();
     }
   }
 
   next() {
-    this.sequence = ++this.sequence % this.command.subcommands.length;
-    console.log("sequence: ", this.sequence);
-    this.router.navigate([this.command.subcommands[this.sequence]]);
+    this.sequence = ++this.sequence % this.command.routes.length;
+    this.router.navigate([this.command.routes[this.sequence]]);
   }
 
   onTitleChanged(title:string) {

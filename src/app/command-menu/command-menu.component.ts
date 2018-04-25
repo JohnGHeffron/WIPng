@@ -57,7 +57,7 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
         //this.commands = data.map(d => new WipCommand(d.caption, d.enabled, d.expires));
         let factory: WipCommandFactory = new WipCommandFactory();
         this.commands = data.map(d => factory.makeWipCommand(d.caption, d.enabled, d.expires));
-        this.commands.forEach( cmd => console.log(cmd));
+        //this.commands.forEach( cmd => console.log(cmd));
         // console.log(this.commands[0]);
         // console.log(this.commands[0].route);
       })
