@@ -11,7 +11,7 @@
 .menu-button:disabled {
   color: darkgray; /*var(--prime); */
   background-color: gray; /*var(--prime-light);*/
-  border: 1px solid var(--prime);
+  border: 1px solid darkgray; /*var(--prime);*/
 }
 
 .menu-button:last-of-type {
