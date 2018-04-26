@@ -6,9 +6,11 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <!-- <div class="modal-body" (titleChanged)="onTitleChanged(title)"> -->
-      <router-outlet></router-outlet>
-    <!-- </div> -->
+    <div class="modal-body" (titleChanged)="onTitleChanged(title)">
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
     <div class="modal-footer">
       <!-- <a routerLink='record-pieces' class="btn btn-outline-dark" >Record Pieces</a>   -->
       <!-- <a routerLink='prod-receipt' class="btn btn-outline-dark" >Prod Receipt</a>   -->
@@ -20,4 +22,4 @@
   </div>
 </ng-template>
 
-<button class="menu-button" [disabled]="!command.enabled" (click)="open(content)">{{command.caption}}</button>
+<button class="menu-button" [disabled]="!command.enabled" (click)="doCommand(content)">{{command.caption}}</button>
