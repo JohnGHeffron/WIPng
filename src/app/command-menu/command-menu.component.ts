@@ -7,6 +7,7 @@ import { Workcenter } from '../workcenter';
 import { Operator } from '../operator';
 import { WipCommand } from '../wip-command';
 import { WipCommandFactory } from '../wip-command-factory';
+import { TransactionState } from '../transaction-state.enum';
 
 @Component({
   selector: 'app-command-menu',
@@ -22,6 +23,7 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
   workcenterSubscription: Subscription;
   operatorSubscription: Subscription;
   jobSubscription: Subscription;
+  transactionSubscription: Subscription;
 
   private commands: WipCommand[];
   // private currentWorkcenter: Workcenter;    //NOTE: NO STATE IN COMPONENT; USE APPSTATE!!
@@ -32,18 +34,35 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
     this.workcenterSubscription = appState.workcenterChanged.subscribe(
       workcenter => { 
         // this.currentWorkcenter = workcenter;
+        console.log("command menu: workcenter changed.");
         this.loadCommands()
     });
     this.operatorSubscription = appState.operatorChanged.subscribe(
       operator => { 
         // this.currentOperator = operator;
+        console.log("command menu: operator changed.");
         this.loadCommands(); 
     });
     this.jobSubscription = appState.jobChanged.subscribe(
       job => { 
         // this.jobId = job;
-        this.loadCommands(); }
-    )
+        console.log("command menu: job changed.");
+        this.loadCommands(); 
+    });
+    this.transactionSubscription = apiService.transactionState.subscribe(
+      trans => {
+        switch (trans) {
+          case (TransactionState.complete):
+          console.log("command menu: transaction complete.");
+          this.loadCommands();
+            break;
+          case (TransactionState.pending):
+          console.log("command menu: transaction pending.");
+          this.disableCommands();
+            break;
+          default:
+        }
+    });
   }
 
   loadCommands() {
@@ -55,7 +74,7 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
       .then( (response) => {return response.json(); })
       .then( (data) => {
         //this.commands = data.map(d => new WipCommand(d.caption, d.enabled, d.expires));
-        let factory: WipCommandFactory = new WipCommandFactory();
+        let factory: WipCommandFactory = new WipCommandFactory(this.apiService); //TODO: can this be static/a singleton?
         this.commands = data.map(d => factory.makeWipCommand(d.caption, d.enabled, d.expires));
         //this.commands.forEach( cmd => console.log(cmd));
         // console.log(this.commands[0]);
@@ -63,6 +82,11 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
       })
     }
   }
+
+  disableCommands() {
+    this.commands.map( c => c.enabled = false );
+  }
+
   ngOnInit() {
   }
 
@@ -70,6 +94,7 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
     this.workcenterSubscription.unsubscribe();
     this.operatorSubscription.unsubscribe();
     this.jobSubscription.unsubscribe();
+    this.transactionSubscription.unsubscribe();
   }
 
 }

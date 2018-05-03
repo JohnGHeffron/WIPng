@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ApiService } from '../api.service';
 import { AppStateService } from '../app-state.service';
+import { TransactionState } from '../transaction-state.enum';
 
 @Component({
   selector: 'app-job-list',
@@ -29,15 +30,21 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   get currentJob() {return this._currentJob;}
 
-  subscription: Subscription;
+  workcenterChangedSubscription: Subscription;
+  transactionStateSubscription: Subscription;
 
   constructor(private apiService: ApiService, private appState: AppStateService) { 
-    this.subscription = this.appState.workcenterChanged.subscribe(
+    this.workcenterChangedSubscription = this.appState.workcenterChanged.subscribe(
       workcenter => {
         // console.log('detected workcenter change: ', workcenter);
         this.loadJobList(workcenter.id)
       }
     );
+    this.transactionStateSubscription = this.apiService.transactionState.subscribe(
+      trans => {
+        this.loadJobList(this.appState.workcenter.id);
+      }
+    )
   }
 
   loadJobList(workcenterId) {
@@ -62,6 +69,6 @@ export class JobListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.workcenterChangedSubscription.unsubscribe();
   }
 }

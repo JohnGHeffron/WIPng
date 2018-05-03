@@ -1,24 +1,41 @@
 import { WipCommand } from './wip-command';
 import { CommandName } from './command-name.enum';
-import { Command } from 'protractor';
+import { ApiService } from './api.service';
+//import { Command } from 'protractor';
 
 export class WipCommandFactory {
 
+  constructor(private apiService: ApiService) {  }
+
   makeWipCommand(caption: string, enabled: boolean, expires: boolean): WipCommand {
     let cmd: WipCommand = new WipCommand(caption, enabled, expires);
-    cmd.run = this.run(cmd.commandName);
+    cmd.run = this.run(cmd.commandName, cmd.expires);
     cmd.routes = this.subcommands(cmd.commandName);
     return cmd;
   }
 
-  private run(cmdName: CommandName): () => void {
+  private run(cmdName: CommandName, expires: boolean): () => void {
     switch (cmdName) {
       case CommandName.StartRun:
-        return () => { console.log("Start run.")}
+        return () => { 
+          this.apiService.sendStartRunTransaction(expires);
+          console.log("Start run.");
+        }
       case CommandName.StartSetup:
-        return () => { console.log("Start setup.")}
+        return () => { 
+          this.apiService.sendStartSetupTransaction(expires);
+          console.log("Start setup.");
+        }
       case CommandName.StartIndirect:
-        return () => { console.log("Start indirect.")}
+        return () => { 
+          this.apiService.sendStartIndirectTransaction(expires);
+          console.log("Start indirect.");
+        }
+      case CommandName.Stop:
+        return () => {
+          this.apiService.sendStopTransaction(expires);
+          console.log("Stop labor.");
+        }
       default:
         return () => { console.log(`from factory: running ${cmdName}`)};//() => {};
     }
