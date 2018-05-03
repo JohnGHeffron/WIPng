@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
@@ -14,19 +14,18 @@ import { Operator } from '../operator';
     (click)="nameClicked()">
       {{fullName}}
     </span> 
-    <input type="text" 
+    <input type="text" size="7"
       [formControl]="userInput" 
       [hidden]="currentOperator"
-      [value]="badgeValue" 
-      />`,
-  styleUrls: ['./operator.component.css']
+      />`,      //#userInput="ngModel"
+      styleUrls: ['./operator.component.css']
 })
 export class OperatorComponent implements OnInit {
 
   private operators: Operator[];
   @Input() currentOperator: Operator;
   private subscription: Subscription;
-  badgeValue: string = null;
+  //@ViewChild('userInput') userInputFld: ElementRef;
 
   userInput: FormControl = new FormControl('');
 
@@ -36,27 +35,21 @@ export class OperatorComponent implements OnInit {
       .subscribe( badge => this.findOperator(badge));
     this.subscription = this.appState.operatorChanged.subscribe(
       operator => {
-        console.log('changing to operator:', operator);
+        //console.log('changing to operator:', operator);
         this.currentOperator = operator;
       });
     appState.operator = null;
     }
 
-  // get currentOperator() { return this._currentOperator; }
-  // set currentOperator(value: Operator) {
-  //   this._currentOperator = value;
-  //   this.appState.setOperator(value);
-  // }
-
   findOperator(badge: string): void {
     let operator = this.operators.find( op => { return op.username === badge } );
-    //this.currentOperator = operator ? operator : null;
+    this.userInput.setValue('',{});
     this.appState.operator = operator; //this.currentOperator;
   }
 
   nameClicked() {
     this.currentOperator = null;
-    this.badgeValue = '';
+    //this.userInputFld.nativeElement.focus();
   }
 
   get fullName() {

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -47,6 +47,7 @@ import { StartLaborComponent } from './commands/start-labor/start-labor.componen
   imports: [
     BrowserModule, 
     routing,
+    FormsModule,
     ReactiveFormsModule, 
     NgbModule.forRoot()  
   ],
