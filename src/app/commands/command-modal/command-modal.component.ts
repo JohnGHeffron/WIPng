@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WipCommand } from '../../wip-command';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppStateService } from '../../app-state.service';
 
 @Component({
   selector: 'app-command-modal',
@@ -15,13 +16,25 @@ export class CommandModalComponent implements OnInit {
   title: string;
   sequence: number = 0;
 
-  constructor(private modalService: NgbModal, private router: Router) { }
+  constructor(private modalService: NgbModal, 
+      private router: Router, private appState: AppStateService) { }
 
-  open(content) {
+  doCommand(content) {
     if (this.command.routes.length > 0){
-      this.modalService.open(content);
+      this.modalService
+        .open(content).result
+        .then( result => { 
+          this.command.run(); 
+          if (this.command.expires) {
+            this.appState.operator = null;
+          }
+        }, 
+               reason => { 
+          console.log(reason); 
+          return reason != 'Cross click'}); // Is there some way to cancel a dismiss??
       this.router.navigate([this.command.routes[0]]);
-    } else {
+    } 
+    else {
       this.command.run();
     }
   }
