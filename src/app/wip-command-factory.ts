@@ -1,11 +1,16 @@
 import { WipCommand } from './wip-command';
 import { CommandName } from './command-name.enum';
 import { ApiService } from './api.service';
-//import { Command } from 'protractor';
+import { StartRunTransaction } from './app_objects/StartRunTransaction';
+import { StartSetupTransaction } from './app_objects/StartSetupTransaction';
+import { StartIndirectTransaction } from './app_objects/StartIndirectTransaction';
+import { StopLaborTransaction } from './app_objects/StopLaborTransaction';
+import { AppStateService } from './app-state.service';
 
 export class WipCommandFactory {
 
-  constructor(private apiService: ApiService) {  }
+  constructor(private apiService: ApiService, 
+            private appState: AppStateService) {  }
 
   makeWipCommand(caption: string, enabled: boolean, expires: boolean): WipCommand {
     let cmd: WipCommand = new WipCommand(caption, enabled, expires);
@@ -18,22 +23,26 @@ export class WipCommandFactory {
     switch (cmdName) {
       case CommandName.StartRun:
         return () => { 
-          this.apiService.sendStartRunTransaction(expires);
+          this.apiService.sendWipTransaction(
+            new StartRunTransaction(this.appState), expires);
           console.log("Start run.");
         }
       case CommandName.StartSetup:
         return () => { 
-          this.apiService.sendStartSetupTransaction(expires);
+          this.apiService.sendWipTransaction(
+            new StartSetupTransaction(this.appState), expires);
           console.log("Start setup.");
         }
       case CommandName.StartIndirect:
         return () => { 
-          this.apiService.sendStartIndirectTransaction(expires);
+          this.apiService.sendWipTransaction(
+            new StartIndirectTransaction(this.appState), expires);
           console.log("Start indirect.");
         }
       case CommandName.Stop:
         return () => {
-          this.apiService.sendStopTransaction(expires);
+          this.apiService.sendWipTransaction(
+            new StopLaborTransaction(this.appState), expires);
           console.log("Stop labor.");
         }
       default:

@@ -74,7 +74,7 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
       .then( (response) => {return response.json(); })
       .then( (data) => {
         //this.commands = data.map(d => new WipCommand(d.caption, d.enabled, d.expires));
-        let factory: WipCommandFactory = new WipCommandFactory(this.apiService); //TODO: can this be static/a singleton?
+        let factory: WipCommandFactory = new WipCommandFactory(this.apiService, this.appState); //TODO: can this be static/a singleton?
         this.commands = data.map(d => factory.makeWipCommand(d.caption, d.enabled, d.expires));
         //this.commands.forEach( cmd => console.log(cmd));
         // console.log(this.commands[0]);

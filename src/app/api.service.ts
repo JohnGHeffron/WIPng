@@ -2,16 +2,12 @@ import { Injectable } from '@angular/core';
 import { AppStateService } from './app-state.service';
 import { TransactionState } from './transaction-state.enum';
 import { Subject } from 'rxjs/Subject';
+import { WipTransaction } from './app_objects/WipTransaction';
+
 import * as moment from 'moment';
 
 @Injectable()
 export class ApiService {
-
-  SETUP = 'setup';
-  RUN = 'run';
-  INDIRECT = 'IndirectProductionOrderLabor';
-  START_LABOR = 'StartLabor';
-  STOP_LABOR = 'StopLabor';
 
   HOST = "localhost"; //"dev-mes-52"; //
   APP = "mes"; //"paperless.web.api"; //
@@ -57,31 +53,15 @@ export class ApiService {
     return fetch(`http://${this.HOST}/${this.APP}/api/Workcenters/GetMenu?workcenterId=${workCenterId}&orderId=${orderId}&employeeId=${employeeId}`);
   }
 
+  getReasonCodes = function(reasonCodeId) {
+    return fetch(`http://${this.HOST}/${this.APP}/api/InventoryTransaction/ReasonCodes?transTypeId=${reasonCodeId}`);
+  }
+
   testMoment = () => { console.log( moment().format()); }
 
-  sendStartRunTransaction = (expires: boolean) => {
-    this.sendStartTransaction(this.RUN, expires);
-  }
-
-  sendStartSetupTransaction = (expires: boolean) => {
-    this.sendStartTransaction(this.SETUP, expires);
-  }
-
-  sendStartIndirectTransaction = (expires: boolean) => {
-    this.sendStartTransaction(this.INDIRECT, expires);
-  }
-
-  sendStartTransaction = (startType: string, expires: boolean) => {
+  sendWipTransaction = (transaction: WipTransaction, expires: boolean) => {
     this.transactionState.next(TransactionState.pending);
-    this.sendTransaction({
-      'uuid': this.uuidv1(),
-      'type': this.START_LABOR,
-      'subType': startType,
-      'workcenterid': this.appState.workcenter.id,
-      'employeeId': this.appState.operator.id,
-      'jobId': this.appState.job,
-      'time': moment().format()
-    })
+    this.sendTransaction(transaction)
     .then(() => {
       if (expires)
         this.appState.operator = null;
@@ -89,63 +69,44 @@ export class ApiService {
     });
   }
 
-  sendStopTransaction = (expires) => {
-    this.transactionState.next(TransactionState.pending);
-    this.sendTransaction({
-      'uuid': this.uuidv1(),
-      'type': this.STOP_LABOR,
-      'subType': null,
-      'workcenterid': this.appState.workcenter.id,
-      'employeeId': this.appState.operator.id,
-      'jobId': this.appState.job,
-      'time': moment().format()
-    })
-    .then(() => {
-      if (expires)
-        this.appState.operator = null;
-      this.transactionState.next(TransactionState.complete);
-    });
-  };
-
-  //sendStopTransaction = 
 
   sendTransaction = function (transaction) {
-    return this.sendTransactionNoSync(transaction);
-    // if ('serviceWorker' in navigator && 'SyncManager' in window) {
-    //   return sendTransactionSync(transaction);
-    // } else {
-    //   return sendTransactionNoSync(transaction);
-    // }
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller && 'SyncManager' in window) {
+      return this.sendTransactionSync(transaction);
+    } else {
+      return this.sendTransactionNoSync(transaction);
+    }
   }
 
-//   function wait(ms){
-//     var start = new Date().getTime();
-//     var end = start;
-//     while(end < start + ms) {
-//       end = new Date().getTime();
-//    }
-//  }
+  private wait =function(ms) {
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+   }
+ }
 
-  // var sendTransactionSync = function(trans) {
-  //   //idbKeyval.set('sendTransaction', trans)
-  //   return idbKeyval.set(trans.uuid, trans)
-  //   .then( function() {return navigator.serviceWorker.ready;})
-  //   .then( function(sw) {
-  //     // KLUDGE! Programming a wait b/c I can't get notification
-  //     // from the service worker when it actually performs the sync!
-  //     var register = sw.sync.register('sync-sendTransaction');
-  //     wait(1500);
-  //     return register;
-  //     //return sw.sync.register('sync-sendTransaction');
-  //   })
-  //   .catch(function(err) {
-  //     console.log(err);
-  //   })
-  // };
+  private sendTransactionSync = function(trans) {
+    return this.sendTransactionNoSync(trans);
+    // CAN'T DO THE FOLLOWING IN ANGULAR YET:
+    // return idbKeyval.set(trans.uuid, trans)
+    // .then( function() {return navigator.serviceWorker.ready;})
+    // .then( function(sw) {
+    //   // KLUDGE! Programming a wait b/c I can't get notification
+    //   // from the service worker when it actually performs the sync!
+    //   var register = sw.sync.register('sync-sendTransaction');
+    //   this.wait(1500);
+    //   return register;
+    //   //return sw.sync.register('sync-sendTransaction');
+    // })
+    // .catch(function(err) {
+    //   console.log(err);
+    // })
+  };
 
-  sendTransactionNoSync = function (trans) {
+  private sendTransactionNoSync = function (trans) {
       let ok;
-      return fetch('http://${this.HOST}/${this.APP}/api/labortransaction', {
+      return fetch(`http://${this.HOST}/${this.APP}/api/labortransaction`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -155,13 +116,16 @@ export class ApiService {
       })
       .then(function(response){
         ok = response.ok;
-        if (!ok) {
-          console.log('Response problem', response);
+        if (ok) {
+          console.log('transaction sent.');
+        } else {
+          console.log('failed:', response);
         }
         return response.json();
       })
       .then(function(data){
         console.log(data);
+        // TODO: showResult(ok, data.message);
         return {"ok": ok, "message": data};
       })
       .catch(function(err){
