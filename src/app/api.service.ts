@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppStateService } from './app-state.service';
+import { ConfigService } from './config.service';
 import { TransactionState } from './transaction-state.enum';
 import { Subject } from 'rxjs/Subject';
 import { WipTransaction } from './app_objects/WipTransaction';
@@ -16,7 +17,7 @@ export class ApiService {
 
   uuidv1;
 
-  constructor(private appState: AppStateService) { //private uuidv1: () => string, private moment: Moment, 
+  constructor(private appState: AppStateService, private config: ConfigService) { //private uuidv1: () => string, private moment: Moment, 
     // fallback for flaky uuid CDN wzrd.in/standalone/uuid%2Fv1@latest
     if (typeof this.uuidv1 === "undefined") {
       this.uuidv1 = function () {
@@ -28,9 +29,13 @@ export class ApiService {
     }  
   }
 
-  getSites = () => { return fetch(`http://${this.HOST}/${this.APP}/api/sites`); }
+  private fullUri = ( partial: string ): string => {
+    return `${this.config.SCHEME}://${this.config.HOST}/${this.config.APP}/${partial}`;
+  }
 
-  getWorkcenters = (siteId) => { return fetch(`http://${this.HOST}/${this.APP}/api/Workcenters?siteId=${siteId}`) };
+  getSites = () => { return fetch(this.fullUri('api/sites')); }
+
+  getWorkcenters = (siteId) => { return fetch(this.fullUri(`api/Workcenters?siteId=${siteId}`)); }
   
 
   // Note: the list of jobs depends on employee as well as workcenter, because job types might be filtered
@@ -38,23 +43,23 @@ export class ApiService {
   // ...BUT it does not appear to be working as intended. We are passing an id, not a badge number. Default
   // id is -1, which is not a valid badge. We should not get any jobs, but we get the entire list.
   getJobs = (workCenterId, operatorId) => {
-    return fetch(`http://${this.HOST}/${this.APP}/api/Workcenters/ProductionOrders?workcenterId=${workCenterId}&employeeBadge=${operatorId}`);
+    return fetch(this.fullUri(`api/Workcenters/ProductionOrders?workcenterId=${workCenterId}&employeeBadge=${operatorId}`));
   }
  
   getJobDetails = (wkctrId, orderId) => {
-    return fetch(`http://${this.HOST}/${this.APP}/api/Workcenters/ProductionOrderDetails?workcenterId=${wkctrId}&orderId=${orderId}`);
+    return fetch(this.fullUri(`api/Workcenters/ProductionOrderDetails?workcenterId=${wkctrId}&orderId=${orderId}`));
   }
 
   getOperators = () => {
-    return fetch(`http://${this.HOST}/${this.APP}/api/employees`);
+    return fetch(this.fullUri(`api/employees`));
   }
 
   getCommands = (workCenterId, orderId, employeeId) => {
-    return fetch(`http://${this.HOST}/${this.APP}/api/Workcenters/GetMenu?workcenterId=${workCenterId}&orderId=${orderId}&employeeId=${employeeId}`);
+    return fetch(this.fullUri(`api/Workcenters/GetMenu?workcenterId=${workCenterId}&orderId=${orderId}&employeeId=${employeeId}`));
   }
 
   getReasonCodes = function(reasonCodeId) {
-    return fetch(`http://${this.HOST}/${this.APP}/api/InventoryTransaction/ReasonCodes?transTypeId=${reasonCodeId}`);
+    return fetch(this.fullUri(`api/InventoryTransaction/ReasonCodes?transTypeId=${reasonCodeId}`));
   }
 
   testMoment = () => { console.log( moment().format()); }
@@ -106,7 +111,7 @@ export class ApiService {
 
   private sendTransactionNoSync = function (trans) {
       let ok;
-      return fetch(`http://${this.HOST}/${this.APP}/api/labortransaction`, {
+      return fetch(this.fullUri(`api/labortransaction`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

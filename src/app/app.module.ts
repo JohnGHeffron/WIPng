@@ -9,6 +9,7 @@ import { routing } from './app.routing';
 import { SiteComponent } from './site/site.component';
 import { ApiService } from './api.service';
 import { AppStateService } from './app-state.service';
+import { ConfigService } from './config.service';
 import { WorkcenterComponent } from './workcenter/workcenter.component';
 import { JobDetailComponent } from './job-detail/job-detail.component';
 import { JobListComponent } from './job-list/job-list.component';
@@ -51,7 +52,7 @@ import { StartLaborComponent } from './commands/start-labor/start-labor.componen
     ReactiveFormsModule, 
     NgbModule.forRoot()  
   ],
-  providers: [ApiService, AppStateService],
+  providers: [ApiService, AppStateService, ConfigService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
