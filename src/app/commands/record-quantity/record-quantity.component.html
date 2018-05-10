@@ -2,16 +2,17 @@
 <!-- <div class='modal-body'> -->
   <div class="form-group row">
   <label for="goodQty" class="col-md-4 col-form-label">Good Quantity</label>
-  <div class="col-md-8"><input id="goodQty" type="number" min="0" value="0"></div>
+  <div class="col-md-8"><input class="form-control" id="goodQty" type="number" min="0" value="0"></div>
   </div>
   <div class="form-group row app-scrapQty">
     <label for="scrapQty" class="col-md-4 col-form-label">Scrap Quantity</label>
-    <div class="col-md-8"><input id="scrapQty" type="number" min="0" value="0"></div>
+    <div class="col-md-8"><input class="form-control" id="scrapQty" #scrapQty type="number" min="0" value="0"></div>
   </div>
-  <div id="reasonCodeGroup" class="form-group row app-scrapQty" style="display:none">
+  <div id="reasonCodeGroup" class="form-group row app-scrapQty" [hidden]="scrapQty.value == 0">
     <label for="reasonCodeSelect" class="col-md-4 col-form-label">Reason Code</label>
     <div class="col-md-8">
-      <select id="reasonCodeSelect" disabled>
+      <select id="reasonCodeSelect">
+        <option *ngFor="let reason of reasons" value="reason.id">{{reason.name}} ({{reason.description}})</option>
       </select>
     </div>
   </div>
