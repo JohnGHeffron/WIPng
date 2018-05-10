@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+//import { ViewChild, ElementRef } from '@angular/core';   attempt to get focus() to work failed
+// probably easier to scrap the whole business of swapping a span with a text input
+// and just use a text input instead. (why get fancy?)
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
@@ -14,7 +17,7 @@ import { Operator } from '../operator';
     (click)="nameClicked()">
       {{fullName}}
     </span> 
-    <input type="text" size="7"
+    <input type="text" size="7" 
       [formControl]="userInput" 
       [hidden]="currentOperator"
       />`,      //#userInput="ngModel"
@@ -49,7 +52,7 @@ export class OperatorComponent implements OnInit {
 
   nameClicked() {
     this.currentOperator = null;
-    //this.userInputFld.nativeElement.focus();
+    //this.userInputFld.nativeElement.focus(); // error: userInputFld is undefined! Add #userInput to markup and component doesn't work at all.
   }
 
   get fullName() {
