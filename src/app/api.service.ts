@@ -109,8 +109,10 @@ export class ApiService {
     // })
   };
 
-  private sendTransactionNoSync = function (trans) {
+  sendTransactionNoSync = (trans) => {
       let ok;
+      //this works here: this.appState.apiResult = {"ok": true, "message": "testing"};
+      let appState = this.appState;
       return fetch(this.fullUri(`api/labortransaction`), {
         method: 'POST',
         headers: {
@@ -131,7 +133,8 @@ export class ApiService {
       .then(function(data){
         console.log(data);
         // TODO: showResult(ok, data.message);
-        return {"ok": ok, "message": data};
+        appState.apiResult = {"ok": ok, "message": data.message };
+        return {"ok": ok, "message": data.message};
       })
       .catch(function(err){
         console.log(err);

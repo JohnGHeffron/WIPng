@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,6 +26,7 @@ import { ChangeStatusComponent } from './commands/change-status/change-status.co
 import { ProductionReceiptComponent } from './commands/production-receipt/production-receipt.component';
 import { ShopPacketComponent } from './commands/shop-packet/shop-packet.component';
 import { StartLaborComponent } from './commands/start-labor/start-labor.component';
+import { NotifierComponent } from './notifier/notifier.component';
 
 @NgModule({
   declarations: [
@@ -42,11 +45,13 @@ import { StartLaborComponent } from './commands/start-labor/start-labor.componen
     ChangeStatusComponent,
     ProductionReceiptComponent,
     ShopPacketComponent,
-    StartLaborComponent
+    StartLaborComponent,
+    NotifierComponent
   ],
   entryComponents: [],
   imports: [
     BrowserModule, 
+    BrowserAnimationsModule,
     routing,
     FormsModule,
     ReactiveFormsModule, 

@@ -1,0 +1,24 @@
+.message { 
+  font-weight: normal;
+  font-size: 1.5em;
+  padding: .5em 0em;
+  display: block;
+  transition: display 2s;
+  -webkit-transition: display 2s;
+  transition-timing-function: ease-in;
+  -webkit-transition-timing-function: ease-in;
+  position: absolute;
+  left: 0%;
+  top: 20%;
+  width: 100%;
+  text-align: center;
+  z-index: 10
+}
+.error { 
+  color: var(--err-msg-fore);
+  background-color: var(--err-msg-back);
+}
+.info { 
+  color: var(--info-msg-fore);
+  background-color: var(--info-msg-back);
+}
