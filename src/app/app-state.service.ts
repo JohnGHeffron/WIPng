@@ -59,7 +59,6 @@ export class AppStateService {
 
   set apiResult(newResult: any) {
     this._apiResult = newResult;
-    console.log(newResult);
     this.apiResultSubject.next(newResult);
   }
 
