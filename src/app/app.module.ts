@@ -18,7 +18,6 @@ import { JobListComponent } from './job-list/job-list.component';
 import { JobListItemComponent } from './job-list-item/job-list-item.component';
 import { OperatorComponent } from './operator/operator.component';
 import { CommandMenuComponent } from './command-menu/command-menu.component';
-import { Modal2Component } from './modal2/modal2.component';
 import { NotImplementedComponent } from './commands/notimplemented.component';
 import { CommandModalComponent } from './commands/command-modal/command-modal.component';
 import { RecordQuantityComponent } from './commands/record-quantity/record-quantity.component';
@@ -38,7 +37,6 @@ import { NotifierComponent } from './notifier/notifier.component';
     JobListItemComponent,
     OperatorComponent,
     CommandMenuComponent,
-    Modal2Component,
     NotImplementedComponent,
     CommandModalComponent,
     RecordQuantityComponent,
