@@ -41,8 +41,10 @@ export class AppStateService {
 
   set job(newJobId: number) {
     //console.log("changing job id to ", newJobId);
-    this._job = newJobId;
-    this.jobSubject.next(newJobId);
+    if (newJobId !== this._job){
+      this._job = newJobId;
+      this.jobSubject.next(newJobId);
+    }
   }
 
   get job(): number { return this._job; }

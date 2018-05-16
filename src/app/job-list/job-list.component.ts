@@ -40,7 +40,7 @@ export class JobListComponent implements OnInit, OnDestroy {
         this.loadJobList(workcenter.id)
       }
     );
-    this.transactionStateSubscription = this.apiService.transactionState.subscribe(
+    this.transactionStateSubscription = ApiService.transactionState.subscribe(
       trans => {
         this.loadJobList(this.appState.workcenter.id);
       }

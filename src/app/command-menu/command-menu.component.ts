@@ -24,6 +24,7 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
   operatorSubscription: Subscription;
   jobSubscription: Subscription;
   transactionSubscription: Subscription;
+  transactionPending: boolean = false;
 
   private commands: WipCommand[];
   // private currentWorkcenter: Workcenter;    //NOTE: NO STATE IN COMPONENT; USE APPSTATE!!
@@ -49,15 +50,17 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
         console.log("command menu: job changed.");
         this.loadCommands(); 
     });
-    this.transactionSubscription = apiService.transactionState.subscribe(
+    this.transactionSubscription = ApiService.transactionState.subscribe(
       trans => {
         switch (trans) {
           case (TransactionState.complete):
           console.log("command menu: transaction complete.");
+          this.transactionPending = false;
           this.loadCommands();
             break;
           case (TransactionState.pending):
           console.log("command menu: transaction pending.");
+          this.transactionPending = true;
           this.disableCommands();
             break;
           default:
@@ -66,6 +69,8 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
   }
 
   loadCommands() {
+    if (this.transactionPending) return;
+
     if ( this.appState.workcenter 
           && this.appState.operator 
           && this.appState.job) {

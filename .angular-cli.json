@@ -9,6 +9,9 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "sw.js", 
+        "sw-register.js",
+        "./js/idb-keyval.js",
         "favicon.ico"
       ],
       "index": "index.html",
