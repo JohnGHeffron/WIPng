@@ -8,7 +8,8 @@
     <label for="scrapQty" class="col-md-4 col-form-label">Scrap Quantity</label>
     <div class="col-md-8"><input class="form-control" id="scrapQty" #scrapQty type="number" min="0" value="0"></div>
   </div>
-  <div id="reasonCodeGroup" class="form-group row app-scrapQty" [hidden]="scrapQty.value == 0">
+  <!-- <div id="reasonCodeGroup" class="form-group row app-scrapQty" [hidden]="scrapQty.value == 0"> -->
+  <div *ngIf="scrapQty.value > 0" id="reasonCodeGroup" class="form-group row app-scrapQty" [@showHide]>
     <label for="reasonCodeSelect" class="col-md-4 col-form-label">Reason Code</label>
     <div class="col-md-8">
       <select id="reasonCodeSelect">
