@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { AppStateService } from '../app-state.service';
+// import { AppStateService } from '../app-state.service';
+import { ApiService } from '../api.service';
+import { TransactionState } from '../transaction-state.enum';
+
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -29,13 +32,25 @@ export class NotifierComponent implements OnDestroy {
   currentClasses: {};
   subscription: Subscription;
 
-  constructor(private appState: AppStateService) { 
-    this.subscription = appState.newApiResult.subscribe(
-      notify => {
-        this.isError = !notify.ok;
-        this.message = notify.message;
-        this.setCurrentClasses();
-        setTimeout(() => {this.message = null;}, 5000);
+  // constructor(private appState: AppStateService) { 
+  //   this.subscription = appState.newApiResult.subscribe(
+  //     notify => {
+  //       this.isError = !notify.ok;
+  //       this.message = notify.message;
+  //       this.setCurrentClasses();
+  //       setTimeout(() => {this.message = null;}, 5000);
+  //     } 
+  //   )
+  // }
+  constructor(private apiService: ApiService) { 
+    this.subscription = ApiService.transactionState.subscribe(
+      status => {
+        if (status === TransactionState.complete) {
+          this.isError = !ApiService.transactionOk;
+          this.message = ApiService.transactionMessage;
+          this.setCurrentClasses();
+          setTimeout(() => {this.message = null;}, 3000); 
+        }
       } 
     )
   }

@@ -12,6 +12,8 @@ import { set } from 'idb-keyval';
 export class ApiService {
 
   static transactionState: Subject<TransactionState> = new Subject<TransactionState>();
+  static transactionOk: boolean;
+  static transactionMessage: string;
 
   uuidv1;
 
@@ -30,8 +32,10 @@ export class ApiService {
       .addEventListener('message', function(event) {
         console.log('from service worker: ', event.data);
         //showResult(event.data.ok, event.data.message);
+        ApiService.transactionOk = event.data.ok;
+        ApiService.transactionMessage = event.data.message;
         ApiService.transactionState.next(TransactionState.complete);
-        appState.apiResult = {"ok": event.data.ok, "message": event.data.message};
+        // appState.apiResult = {"ok": event.data.ok, "message": event.data.message};
       });
     }
   }
@@ -78,7 +82,7 @@ export class ApiService {
     });
   }
 
-  sendTransaction = function (transaction) {
+  private sendTransaction = (transaction) => {
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller && 'SyncManager' in window) {
       return this.sendTransactionSync(transaction);
     } else {
@@ -86,7 +90,7 @@ export class ApiService {
     }
   }
 
-  private sendTransactionSync = function(trans) {
+  private sendTransactionSync = (trans) => {
     trans.uuid = this.uuidv1();
     return set(trans.uuid, trans)
     .then( function() {return navigator.serviceWorker.ready;})
@@ -98,7 +102,7 @@ export class ApiService {
     })
   };
 
-  sendTransactionNoSync = (trans) => {
+  private sendTransactionNoSync = (trans) => {
       let ok;
       let appState = this.appState;
       return fetch(this.fullUri(`api/labortransaction`), {
@@ -110,7 +114,6 @@ export class ApiService {
         body: JSON.stringify(trans)
       })
       .then(function(response){
-        ApiService.transactionState.next(TransactionState.complete);
         ok = response.ok;
         if (ok) {
           console.log('transaction sent.');
@@ -121,7 +124,10 @@ export class ApiService {
       })
       .then(function(data){
         console.log(data);
-        appState.apiResult = {"ok": ok, "message": data.message };
+        // appState.apiResult = {"ok": ok, "message": data.message };
+        ApiService.transactionOk = ok;
+        ApiService.transactionMessage = data.message;
+        ApiService.transactionState.next(TransactionState.complete);
         return {"ok": ok, "message": data.message};
       })
       .catch(function(err){
