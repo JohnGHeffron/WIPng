@@ -10,6 +10,7 @@ import { AppStateService } from '../app-state.service';
   <select id="siteSelect" #siteSelect (change)="onChange(siteSelect.selectedOptions[0].index)">
    <option *ngFor="let site of sites" 
     class="siteOption" 
+    ng-select="site.id === appState.site.id"
     value="{{site.id}}"> 
       {{ site.name }} - {{site.description}}
    </option>
@@ -19,17 +20,12 @@ import { AppStateService } from '../app-state.service';
 export class SiteComponent implements OnInit {
 
   sites: Site[]; 
-  currentSite: Site = {id: 1, name: null, description: null}; //TODO: this is (probably) redundant. Can we get it from AppStateService?
 
   constructor(private apiService: ApiService, private appState: AppStateService) { }
 
   onChange(index: number) {
-    //console.log("site before:", this.currentSite);
-    // the following line was used when $event was passed from the template:
-    //let index: number = event.srcElement.selectedOptions[0].index;
-    this.currentSite = this.sites[index];
-    this.appState.site = this.currentSite;
-    console.log("site after:", this.currentSite);
+    this.appState.site = this.sites[index];
+    console.log("site after:", this.appState.site);
   }
 
   ngOnInit() {
@@ -37,8 +33,9 @@ export class SiteComponent implements OnInit {
       .then((response) => response.json())
       .then((data) => {
         this.sites = data;
-        this.currentSite = this.sites[0];
-        this.appState.site = this.currentSite;
+        if (!this.appState.site) {
+          this.appState.site = this.sites[0];
+        }
       });
   }
 
