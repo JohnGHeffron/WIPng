@@ -45,8 +45,11 @@ export class ApiService {
   }
 
   getSites = () => { return fetch(this.fullUri('api/sites')); }
+  getSite = (id: number) => { return fetch(this.fullUri(`api/sites/${id}`)); }
 
+  getAllWorkcenters = () => { return fetch(this.fullUri(`api/Workcenters`)); }
   getWorkcenters = (siteId) => { return fetch(this.fullUri(`api/Workcenters?siteId=${siteId}`)); }
+  getWorkcenter = (id) => { return fetch(this.fullUri(`api/Workcenters/${id}`)) }
   
 
   // Note: the list of jobs depends on employee as well as workcenter, because job types might be filtered
