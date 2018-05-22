@@ -15,6 +15,7 @@ export class AppStateService {
   private operatorSubject = new Subject<Operator>();
   // private apiResultSubject = new Subject<any>();
 
+  private _site: Site;
   private _workcenter: Workcenter;
   private _operator: Operator = new Operator(); // (set a default so menu appears)
   private _job: number;
@@ -27,7 +28,12 @@ export class AppStateService {
   // newApiResult = this.apiResultSubject.asObservable();
 
   set site(newSite: Site) {
+    this._site = newSite;
     this.siteSubject.next(newSite);
+  }
+
+  get site() {
+    return this._site;
   }
 
   set workcenter(newWorkcenter: Workcenter) {
