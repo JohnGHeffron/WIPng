@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { routing } from './app.routing';
-import { SiteComponent } from './site/site.component';
 import { ApiService } from './api.service';
 import { AppStateService } from './app-state.service';
 import { ConfigService } from './config.service';
+import { WipCommandFactory } from './wip-command-factory';
+
+import { AppComponent } from './app.component';
+import { routing } from './app.routing';
+import { SiteComponent } from './site/site.component';
 import { WorkcenterComponent } from './workcenter/workcenter.component';
 import { JobDetailComponent } from './job-detail/job-detail.component';
 import { JobListComponent } from './job-list/job-list.component';
@@ -55,7 +57,7 @@ import { NotifierComponent } from './notifier/notifier.component';
     ReactiveFormsModule, 
     NgbModule.forRoot()  
   ],
-  providers: [ApiService, AppStateService, ConfigService],
+  providers: [ApiService, AppStateService, ConfigService, WipCommandFactory],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

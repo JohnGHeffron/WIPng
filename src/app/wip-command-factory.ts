@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+
 import { WipCommand } from './wip-command';
 import { CommandName } from './command-name.enum';
 import { ApiService } from './api.service';
@@ -7,6 +9,7 @@ import { StartIndirectTransaction } from './app_objects/StartIndirectTransaction
 import { StopLaborTransaction } from './app_objects/StopLaborTransaction';
 import { AppStateService } from './app-state.service';
 
+@Injectable()
 export class WipCommandFactory {
 
   constructor(private apiService: ApiService, 

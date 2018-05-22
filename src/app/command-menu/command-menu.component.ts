@@ -20,7 +20,7 @@ import { TransactionState } from '../transaction-state.enum';
 })
 export class CommandMenuComponent implements OnInit, OnDestroy {
 
-  workcenterSubscription: Subscription;
+  //workcenterSubscription: Subscription;
   operatorSubscription: Subscription;
   jobSubscription: Subscription;
   transactionSubscription: Subscription;
@@ -31,13 +31,15 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
   // private currentOperator: Operator;
   // private jobId: number;
 
-  constructor(private apiService: ApiService, private appState: AppStateService) {
-    this.workcenterSubscription = appState.workcenterChanged.subscribe(
-      workcenter => { 
-        // this.currentWorkcenter = workcenter;
-        console.log("command menu: workcenter changed.");
-        this.loadCommands()
-    });
+  constructor(private apiService: ApiService, private appState: AppStateService, 
+        private wipCommandFactory: WipCommandFactory) {
+    // DO NOT NEED TO MONITOR WORKCENTER CHANGES: JOB CHANGES SUFFICE. (workcenter change => job change)
+    // this.workcenterSubscription = appState.workcenterChanged.subscribe(
+    //   workcenter => { 
+    //     // this.currentWorkcenter = workcenter;
+    //     console.log("command menu: workcenter changed.");
+    //     this.loadCommands()
+    // });
     this.operatorSubscription = appState.operatorChanged.subscribe(
       operator => { 
         // this.currentOperator = operator;
@@ -79,12 +81,10 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
       .then( (response) => {return response.json(); })
       .then( (data) => {
         //this.commands = data.map(d => new WipCommand(d.caption, d.enabled, d.expires));
-        let factory: WipCommandFactory = new WipCommandFactory(this.apiService, this.appState); //TODO: can this be static/a singleton?
-        this.commands = data.map(d => factory.makeWipCommand(d.caption, d.enabled, d.expires));
-        //this.commands.forEach( cmd => console.log(cmd));
-        // console.log(this.commands[0]);
-        // console.log(this.commands[0].route);
+        console.log(data);
+        this.commands = data.map(d => this.wipCommandFactory.makeWipCommand(d.caption, d.enabled, d.expires));
       })
+      .catch( err => console.log("Error retrieving menu", err));
     }
   }
 
@@ -96,7 +96,7 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.workcenterSubscription.unsubscribe();
+    //this.workcenterSubscription.unsubscribe();
     this.operatorSubscription.unsubscribe();
     this.jobSubscription.unsubscribe();
     this.transactionSubscription.unsubscribe();
