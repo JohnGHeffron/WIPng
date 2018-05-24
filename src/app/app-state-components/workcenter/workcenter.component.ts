@@ -1,9 +1,9 @@
 import { Component, OnDestroy, Input, SimpleChange } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ApiService } from '../api.service';
-import { AppStateService } from '../app-state.service';
-import { Workcenter } from '../workcenter';
+import { ApiService } from '../../api.service';
+import { AppStateService } from '../../app-state.service';
+import { Workcenter } from '../../app_objects/workcenter';
 
 @Component({
   selector: 'app-workcenter',

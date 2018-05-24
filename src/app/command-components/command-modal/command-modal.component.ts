@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { WipCommand } from '../../wip-command';
+import { WipCommand } from '../../app_objects/wip-command';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppStateService } from '../../app-state.service';
 

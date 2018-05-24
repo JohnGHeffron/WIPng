@@ -9,25 +9,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { ApiService } from './api.service';
 import { AppStateService } from './app-state.service';
 import { ConfigService } from './config.service';
-import { WipCommandFactory } from './wip-command-factory';
+import { WipCommandFactory } from './app_objects/wip-command-factory';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import { SiteComponent } from './site/site.component';
-import { WorkcenterComponent } from './workcenter/workcenter.component';
-import { JobDetailComponent } from './job-detail/job-detail.component';
-import { JobListComponent } from './job-list/job-list.component';
-import { JobListItemComponent } from './job-list-item/job-list-item.component';
-import { OperatorComponent } from './operator/operator.component';
+import { SiteComponent } from './app-state-components/site/site.component';
+import { WorkcenterComponent } from './app-state-components/workcenter/workcenter.component';
+import { JobDetailComponent } from './app-state-components/job-detail/job-detail.component';
+import { JobListComponent } from './app-state-components/job-list/job-list.component';
+import { JobListItemComponent } from './app-state-components/job-list-item/job-list-item.component';
+import { OperatorComponent } from './app-state-components/operator/operator.component';
 import { CommandMenuComponent } from './command-menu/command-menu.component';
-import { NotImplementedComponent } from './commands/notimplemented.component';
-import { CommandModalComponent } from './commands/command-modal/command-modal.component';
-import { RecordQuantityComponent } from './commands/record-quantity/record-quantity.component';
-import { ChangeStatusComponent } from './commands/change-status/change-status.component';
-import { ProductionReceiptComponent } from './commands/production-receipt/production-receipt.component';
-import { ShopPacketComponent } from './commands/shop-packet/shop-packet.component';
-import { StartLaborComponent } from './commands/start-labor/start-labor.component';
-import { NotifierComponent } from './notifier/notifier.component';
+import { NotImplementedComponent } from './command-components/notimplemented.component';
+import { CommandModalComponent } from './command-components/command-modal/command-modal.component';
+import { RecordQuantityComponent } from './command-components/record-quantity/record-quantity.component';
+import { ChangeStatusComponent } from './command-components/change-status/change-status.component';
+import { ProductionReceiptComponent } from './command-components/production-receipt/production-receipt.component';
+import { ShopPacketComponent } from './command-components/shop-packet/shop-packet.component';
+import { StartLaborComponent } from './command-components/start-labor/start-labor.component';
+import { NotifierComponent } from './app-state-components/notifier/notifier.component';
 
 @NgModule({
   declarations: [

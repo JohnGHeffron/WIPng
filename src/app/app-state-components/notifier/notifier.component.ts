@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 // import { AppStateService } from '../app-state.service';
-import { ApiService } from '../api.service';
-import { TransactionState } from '../transaction-state.enum';
+import { ApiService } from '../../api.service';
+import { TransactionState } from '../../app_objects/transaction-state.enum';
 
 import { Subscription } from 'rxjs';
 

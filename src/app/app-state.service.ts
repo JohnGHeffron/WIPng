@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Site } from './site';
-import { Workcenter } from './workcenter';
-import { Operator } from './operator';
+import { Site } from './app_objects/site';
+import { Workcenter } from './app_objects/workcenter';
+import { Operator } from './app_objects/operator';
 
 @Injectable()
 export class AppStateService {

@@ -1,11 +1,11 @@
-import { CommandName } from './command-name.enum';
+import { CommandName } from './app_objects/command-name.enum';
 import { Routes, RouterModule } from '@angular/router';
-import { RecordQuantityComponent } from './commands/record-quantity/record-quantity.component';
-import { ChangeStatusComponent } from './commands/change-status/change-status.component';
-import { ProductionReceiptComponent } from './commands/production-receipt/production-receipt.component';
-import { ShopPacketComponent } from './commands/shop-packet/shop-packet.component';
-import { NotImplementedComponent } from './commands/notimplemented.component';
-import { StartLaborComponent } from './commands/start-labor/start-labor.component';
+import { RecordQuantityComponent } from './command-components/record-quantity/record-quantity.component';
+import { ChangeStatusComponent } from './command-components/change-status/change-status.component';
+import { ProductionReceiptComponent } from './command-components/production-receipt/production-receipt.component';
+import { ShopPacketComponent } from './command-components/shop-packet/shop-packet.component';
+import { NotImplementedComponent } from './command-components/notimplemented.component';
+import { StartLaborComponent } from './command-components/start-labor/start-labor.component';
 
 const routes: Routes = [
   {path: CommandName.RecordPieces, component: RecordQuantityComponent },

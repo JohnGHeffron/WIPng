@@ -6,9 +6,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 
-import { ApiService } from '../api.service';
-import { AppStateService } from '../app-state.service';
-import { Operator } from '../operator';
+import { ApiService } from '../../api.service';
+import { AppStateService } from '../../app-state.service';
+import { Operator } from '../../app_objects/operator';
 
 @Component({
   selector: 'app-operator',

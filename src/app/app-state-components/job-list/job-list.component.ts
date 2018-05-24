@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ApiService } from '../api.service';
-import { AppStateService } from '../app-state.service';
-import { TransactionState } from '../transaction-state.enum';
+import { ApiService } from '../../api.service';
+import { AppStateService } from '../../app-state.service';
+import { TransactionState } from '../../app_objects/transaction-state.enum';
 
 @Component({
   selector: 'app-job-list',
@@ -36,7 +36,7 @@ export class JobListComponent implements OnInit, OnDestroy {
   constructor(private apiService: ApiService, private appState: AppStateService) { 
     this.workcenterChangedSubscription = this.appState.workcenterChanged.subscribe(
       workcenter => {
-        // console.log('detected workcenter change: ', workcenter);
+        console.log('detected workcenter change in job list: ', workcenter);
         this.loadJobList(workcenter.id)
       }
     );

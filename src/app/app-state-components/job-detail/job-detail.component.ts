@@ -1,8 +1,8 @@
 import { Component, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ApiService } from '../api.service';
-import { AppStateService } from '../app-state.service';
+import { ApiService } from '../../api.service';
+import { AppStateService } from '../../app-state.service';
 
 @Component({
   selector: 'app-job-detail',

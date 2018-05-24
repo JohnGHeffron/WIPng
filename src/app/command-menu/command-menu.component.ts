@@ -3,11 +3,11 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ApiService } from '../api.service';
 import { AppStateService } from '../app-state.service';
-import { Workcenter } from '../workcenter';
-import { Operator } from '../operator';
-import { WipCommand } from '../wip-command';
-import { WipCommandFactory } from '../wip-command-factory';
-import { TransactionState } from '../transaction-state.enum';
+import { Workcenter } from '../app_objects/workcenter';
+import { Operator } from '../app_objects/operator';
+import { WipCommand } from '../app_objects/wip-command';
+import { WipCommandFactory } from '../app_objects/wip-command-factory';
+import { TransactionState } from '../app_objects/transaction-state.enum';
 
 @Component({
   selector: 'app-command-menu',
