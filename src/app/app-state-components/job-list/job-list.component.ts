@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ApiService } from '../../api.service';
 import { AppStateService } from '../../app-state.service';
-import { TransactionState } from '../../app_objects/transaction-state.enum';
+import { TransactionState } from '../../app-objects/transaction-state.enum';
 
 @Component({
   selector: 'app-job-list',

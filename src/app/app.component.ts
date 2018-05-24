@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppStateService } from './app-state.service';
 import { ApiService } from './api.service';
 import { Subscription } from 'rxjs';
-import { Site } from './app_objects/site';
+import { Site } from './app-objects/site';
 
 @Component({
   selector: 'app-root',

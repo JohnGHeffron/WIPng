@@ -9,7 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ApiService } from './api.service';
 import { AppStateService } from './app-state.service';
 import { ConfigService } from './config.service';
-import { WipCommandFactory } from './app_objects/wip-command-factory';
+import { WipCommandFactory } from './app-objects/wip-command-factory';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';

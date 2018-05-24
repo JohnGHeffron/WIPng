@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AppStateService } from './app-state.service';
 import { ConfigService } from './config.service';
-import { TransactionState } from './app_objects/transaction-state.enum';
+import { TransactionState } from './app-objects/transaction-state.enum';
 import { Subject } from 'rxjs/Subject';
-import { WipTransaction } from './app_objects/WipTransaction';
+import { WipTransaction } from './app-objects/WipTransaction';
 
 import * as moment from 'moment';
 import { set } from 'idb-keyval';

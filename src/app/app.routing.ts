@@ -1,4 +1,4 @@
-import { CommandName } from './app_objects/command-name.enum';
+import { CommandName } from './app-objects/command-name.enum';
 import { Routes, RouterModule } from '@angular/router';
 import { RecordQuantityComponent } from './command-components/record-quantity/record-quantity.component';
 import { ChangeStatusComponent } from './command-components/change-status/change-status.component';

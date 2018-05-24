@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ApiService } from '../../api.service';
 import { AppStateService } from '../../app-state.service';
-import { Workcenter } from '../../app_objects/workcenter';
+import { Workcenter } from '../../app-objects/workcenter';
 
 @Component({
   selector: 'app-workcenter',

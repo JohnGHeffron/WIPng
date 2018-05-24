@@ -8,7 +8,7 @@ import 'rxjs/add/operator/debounceTime';
 
 import { ApiService } from '../../api.service';
 import { AppStateService } from '../../app-state.service';
-import { Operator } from '../../app_objects/operator';
+import { Operator } from '../../app-objects/operator';
 
 @Component({
   selector: 'app-operator',

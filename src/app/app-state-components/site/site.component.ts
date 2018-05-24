@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { Site } from '../../app_objects/site';
+import { Site } from '../../app-objects/site';
 
 import { ApiService } from '../../api.service';
 import { AppStateService } from '../../app-state.service';
