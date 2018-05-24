@@ -8,6 +8,7 @@ export enum CommandName {
   StartRun = "start-run",
   StartIndirect = "start-indirect",
   Stop = "stop",
+  StopwoQty = "stop-w/o-qty",
   IssueMaterial = "issue-material",
   Test = "test",
   MyJobs = "my-jobs",

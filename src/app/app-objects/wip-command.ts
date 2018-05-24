@@ -9,7 +9,7 @@ export class WipCommand {
   expires: boolean;
   //name: CommandName;
   //hasUI: boolean;
-  run: () => void;
+  run: () => void = () => {};
   routes: CommandName[]=[];
   
   constructor(caption: string, enabled: boolean, expires: boolean, 

@@ -26,7 +26,7 @@ export class WipCommandFactory {
    }
 
   makeWipCommand(caption: string, enabled: boolean, expires: boolean): WipCommand {
-    let cmd: WipCommand  =  this.commands.find( x => x.commandName === CommandName[caption.replace(" ", "")] );
+    let cmd: WipCommand  =  this.commands.find( x => x.commandName === CommandName[caption.replace(" ", "").replace("/","")] );
     if (cmd) {
       cmd.caption = caption;
       cmd.enabled = enabled;
