@@ -1,4 +1,6 @@
 import { CommandName } from './command-name.enum';
+import { AppStateService } from '../app-state.service';
+import { ApiService } from '../api.service';
 
 export class WipCommand {
   caption: string;
@@ -10,7 +12,8 @@ export class WipCommand {
   run: () => void;
   routes: CommandName[]=[];
   
-  constructor(caption: string, enabled: boolean, expires: boolean){
+  constructor(caption: string, enabled: boolean, expires: boolean, 
+          protected appState: AppStateService, protected apiService: ApiService){
     this.caption = caption;
     this.enabled = enabled;
     this.expires = expires;

@@ -3,11 +3,11 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ApiService } from '../api.service';
 import { AppStateService } from '../app-state.service';
-import { Workcenter } from '../app_objects/workcenter';
-import { Operator } from '../app_objects/operator';
-import { WipCommand } from '../app_objects/wip-command';
-import { WipCommandFactory } from '../app_objects/wip-command-factory';
-import { TransactionState } from '../app_objects/transaction-state.enum';
+import { Workcenter } from '../app-objects/workcenter';
+import { Operator } from '../app-objects/operator';
+import { WipCommand } from '../app-objects/wip-command';
+import { WipCommandFactory } from '../app-objects/wip-command-factory';
+import { TransactionState } from '../app-objects/transaction-state.enum';
 
 @Component({
   selector: 'app-command-menu',
@@ -81,7 +81,7 @@ export class CommandMenuComponent implements OnInit, OnDestroy {
       .then( (response) => {return response.json(); })
       .then( (data) => {
         //this.commands = data.map(d => new WipCommand(d.caption, d.enabled, d.expires));
-        console.log(data);
+        //console.log(data);
         this.commands = data.map(d => this.wipCommandFactory.makeWipCommand(d.caption, d.enabled, d.expires));
       })
       .catch( err => console.log("Error retrieving menu", err));

@@ -16,7 +16,7 @@ export class WipCommandFactory {
             private appState: AppStateService) {  }
 
   makeWipCommand(caption: string, enabled: boolean, expires: boolean): WipCommand {
-    let cmd: WipCommand = new WipCommand(caption, enabled, expires);
+    let cmd: WipCommand = new WipCommand(caption, enabled, expires, this.appState, this.apiService);
     cmd.run = this.run(cmd.commandName, cmd.expires);
     cmd.routes = this.subcommands(cmd.commandName);
     return cmd;
